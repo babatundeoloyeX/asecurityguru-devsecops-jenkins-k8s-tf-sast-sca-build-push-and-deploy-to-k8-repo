@@ -3,8 +3,5 @@ WORKDIR /usr/src/easybuggy
 COPY . .
 RUN mvn -B package
 
-FROM eclipse-temurin:8-jre
-WORKDIR /app
-COPY --from=builder /usr/src/easybuggy/target/ROOT.war easybuggy.jar
-
-CMD ["java","-jar","easybuggy.jar"]
+FROM tomcat:9-jdk8-temurin
+COPY --from=builder /usr/src/easybuggy/target/ROOT.war /usr/local/tomcat/webapps/
